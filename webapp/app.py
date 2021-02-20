@@ -15,6 +15,8 @@ def home():
 
 @app.route('/upload/<filename>', methods=["POST"])
 def uploadfile(filename):
+    file_ = urllib.parse.unquote(filename)
+
     bytes_left = int(request.headers.get('content-length'))
     with open(os.path.join("cdn", filename), 'wb') as upload:
         chunk_size = 1024
@@ -22,7 +24,7 @@ def uploadfile(filename):
             chunk = request.stream.read(chunk_size)
             upload.write(chunk)
             bytes_left -= len(chunk)
-        
+        return "wget https://jack1100up.herokuapp.com/cdn/{}\n\n".format(pathname2url(file_))
 
     # file.save(os.path.join("cdn", file.filename))
 
