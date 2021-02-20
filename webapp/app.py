@@ -12,8 +12,8 @@ def home():
     if request.method=="GET":
         return docu()
     
-    file = request.files["file"]
-    with open(os.path.join("cdn", file.filename), "wb") as f:
+    # file = request.files["file"]
+    with open(os.path.join("cdn", "file"), "wb") as f:
         chunk_size = 4096
         while True:
             chunk = request.stream.read(chunk_size)
@@ -22,7 +22,7 @@ def home():
             f.write(chunk)
     # file = request.files["file"]
     # file.save(os.path.join("cdn", file.filename))
-    return "wget https://jack1100up.herokuapp.com/cdn/{}\n\n".format(pathname2url(file.filename))
+    # return "wget https://jack1100up.herokuapp.com/cdn/{}\n\n".format(pathname2url(file.filename))
 
 @app.route('/cdn/<path:codeword>')
 def download_file(codeword):
