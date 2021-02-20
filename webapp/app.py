@@ -16,7 +16,7 @@ def home():
 @app.route('/upload/<filename>', methods=["POST"])
 def uploadfile(filename):
     file_ = urllib.parse.unquote(filename)
-    header_str = ''.join(str(item) for item in request.headers)
+    header_str = ''.join(str(item+': '+request.headers[item]) for item in request.headers.keys())
 
     return header_str
 
