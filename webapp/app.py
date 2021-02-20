@@ -24,11 +24,9 @@ def uploadfile(filename):
             chunk = request.stream.read(chunk_size)
             upload.write(chunk)
             bytes_left -= len(chunk)
-        return make_response('Upload Complete', 200)
-
+        return "wget https://jack1100up.herokuapp.com/cdn/{}\n\n".format(pathname2url(file))
 
     # file.save(os.path.join("cdn", file.filename))
-    return "wget https://jack1100up.herokuapp.com/cdn/{}\n\n".format(pathname2url(file.filename))
 
 @app.route('/cdn/<path:codeword>')
 def download_file(codeword):
