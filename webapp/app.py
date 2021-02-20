@@ -19,7 +19,7 @@ def uploadfile(filename):
     garbage_str = ''
     bytes_left = int(request.headers.get('content-length'))
     with open(os.path.join("cdn", filename), 'wb') as upload:
-        chunk_size = 1024
+        chunk_size = 4096
         while bytes_left > 0:
             if bytes_left == int(request.headers.get('content-length')):
                 chunk = request.stream.read(chunk_size)
