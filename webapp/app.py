@@ -15,13 +15,11 @@ def home():
 
 @app.route('/upload/<filename>', methods=["POST"])
 def uploadfile(filename):
-    file = urllib.parse.unquote(filename)
-
     bytes_left = int(request.headers.get('content-length'))
     with open(os.path.join("cdn", filename), 'wb') as upload:
         chunk_size = 1024
         while bytes_left > 0:
-            chunk = request.file.stream.read(chunk_size)
+            chunk = file.stream.read(chunk_size)
             upload.write(chunk)
             bytes_left -= len(chunk)
         
