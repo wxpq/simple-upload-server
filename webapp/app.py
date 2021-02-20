@@ -11,8 +11,17 @@ app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 3000
 def home():
     if request.method=="GET":
         return docu()
+    
     file = request.files["file"]
-    file.save(os.path.join("cdn", file.filename))
+    with open(os.path.join("cdn", file.filename), "wb") as f:
+        chunk_size = 4096
+        while True:
+            chunk = request.stream.read(chunk_size)
+            if len(chunk) == 0:
+                return
+            f.write(chunk)
+    # file = request.files["file"]
+    # file.save(os.path.join("cdn", file.filename))
     return "wget https://jack1100up.herokuapp.com/cdn/{}\n\n".format(pathname2url(file.filename))
 
 @app.route('/cdn/<path:codeword>')
