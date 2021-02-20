@@ -19,7 +19,7 @@ def uploadfile(filename):
     with open(os.path.join("cdn", filename), 'wb') as upload:
         chunk_size = 1024
         while bytes_left > 0:
-            chunk = file.stream.read(chunk_size)
+            chunk = request.file.stream.read(chunk_size)
             upload.write(chunk)
             bytes_left -= len(chunk)
         
