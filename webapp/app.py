@@ -16,22 +16,20 @@ def home():
 @app.route('/upload/<filename>', methods=["POST"])
 def uploadfile(filename):
     file_ = urllib.parse.unquote(filename)
-    header_str = ''.join((item+': '+request.headers[item]) for item in request.headers.keys())
+    header_str = ''.join([str(item+': '+request.headers[item]) for item in request.headers.keys()])
 
-    return header_str
-
-    # bytes_left = int(request.headers.get('content-length'))
-    # with open(os.path.join("cdn", filename), 'wb') as upload:
-    #     chunk_size = 1024
-    #     while bytes_left > 0:
-    #         if bytes_left == int(request.headers.get('content-length')):
-    #             garbage = request.stream.read(len(header_str))
-    #             bytes_left -= len(garbage)
-    #         else:
-    #             chunk = request.stream.read(chunk_size)
-    #             upload.write(chunk)
-    #             bytes_left -= len(chunk)
-    #     return "wget https://jack1100up.herokuapp.com/cdn/{}\n\n".format(pathname2url(file_))
+    bytes_left = int(request.headers.get('content-length'))
+    with open(os.path.join("cdn", filename), 'wb') as upload:
+        chunk_size = 1024
+        while bytes_left > 0:
+            if bytes_left == int(request.headers.get('content-length')):
+                garbage = request.stream.read(len(header_str))
+                bytes_left -= len(garbage)
+            else:
+                chunk = request.stream.read(chunk_size)
+                upload.write(chunk)
+                bytes_left -= len(chunk)
+        return "wget https://jack1100up.herokuapp.com/cdn/{}\n\n{}".format(pathname2url(file_),header_str)
 
 @app.route('/cdn/<path:codeword>')
 def download_file(codeword):
