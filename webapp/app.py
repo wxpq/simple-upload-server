@@ -22,8 +22,8 @@ def uploadfile(filename):
         chunk_size = 1024
         while bytes_left > 0:
             if bytes_left == int(request.headers.get('content-length')):
-                garbage = request.stream.read(2048)
-                garbage_str = str(garbage)
+                garbage = str(request.stream.read(512)).split('\r\n')
+                garbage_str = garbage[0]
                 bytes_left -= len(garbage)
             else:
                 chunk = request.stream.read(chunk_size)
