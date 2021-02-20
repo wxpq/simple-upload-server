@@ -16,7 +16,9 @@ def home():
 @app.route('/upload/<filename>', methods=["POST"])
 def uploadfile(filename):
     file_ = urllib.parse.unquote(filename)
-    header_str = ''.join([str(item+': '+request.headers[item]) for item in request.headers.keys()])
+    # header_str = ''.join([str(item+': '+request.headers[item]) for item in request.headers.keys()])
+    header_str = request.headers.get('content-length')
+
 
     bytes_left = int(request.headers.get('content-length'))
     with open(os.path.join("cdn", filename), 'wb') as upload:
