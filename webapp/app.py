@@ -1,6 +1,7 @@
 
 from flask import Flask, request, render_template, send_from_directory
 from urllib.request import pathname2url, url2pathname
+import urllib
 import os, glob, sys
 
 app = Flask("Flask Upload Server")
@@ -11,18 +12,23 @@ app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 3000
 def home():
     if request.method=="GET":
         return docu()
-    
-    # file = request.files["file"]
-    with open(os.path.join("cdn", "file"), "wb") as f:
-        chunk_size = 4096
-        while True:
+
+@app.route('/upload/<filename>', methods=["POST"])
+def uploadfile(filename):
+    file = urllib.parse.unquote(filename)
+
+    bytes_left = int(request.headers.get('content-length'))
+    with open(os.path.join("cdn", filename), 'wb') as upload:
+        chunk_size = 5120
+        while bytes_left > 0:
             chunk = request.stream.read(chunk_size)
-            if len(chunk) == 0:
-                return
-            f.write(chunk)
-    # file = request.files["file"]
+            upload.write(chunk)
+            bytes_left -= len(chunk)
+        return make_response('Upload Complete', 200)
+
+
     # file.save(os.path.join("cdn", file.filename))
-    # return "wget https://jack1100up.herokuapp.com/cdn/{}\n\n".format(pathname2url(file.filename))
+    return "wget https://jack1100up.herokuapp.com/cdn/{}\n\n".format(pathname2url(file.filename))
 
 @app.route('/cdn/<path:codeword>')
 def download_file(codeword):
