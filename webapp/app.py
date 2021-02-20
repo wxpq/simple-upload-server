@@ -24,9 +24,11 @@ def uploadfile(filename):
         while bytes_left > 0:
             if bytes_left == int(request.headers.get('content-length')):
                 garbage = request.stream.read(len(header_str))
-            chunk = request.stream.read(chunk_size)
-            upload.write(chunk)
-            bytes_left -= len(chunk)
+                continue
+            else:
+                chunk = request.stream.read(chunk_size)
+                upload.write(chunk)
+                bytes_left -= len(chunk)
         return "wget https://jack1100up.herokuapp.com/cdn/{}\n\n".format(pathname2url(file_))
 
     file.save(os.path.join("cdn", file.filename))
