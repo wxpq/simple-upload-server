@@ -1,6 +1,6 @@
 {
-    "name": "Telegram Leecher",
-    "description": "A Telegram Leecher based on Pyrogram",
+    "name": "Simple Upload Server",
+    "description": "Upload server",
     "keywords": [
       "telegram",
       "pyrogram",
@@ -8,8 +8,8 @@
       "3",
       "leecher"
     ],
-    "website": "https://github.com/azamaulanaaa/botkaca",
-    "repository": "https://github.com/azamaulanaaa/botkaca",
+    "website": "https://github.com/noob0x/simple-upload-server",
+    "repository": "https://github.com/noob0x/simple-upload-server",
     "env": {
       "BOT_PASSWORD": {
         "description": "enter pasword or leave it public",
