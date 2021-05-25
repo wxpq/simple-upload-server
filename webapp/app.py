@@ -30,7 +30,7 @@ def uploadfile(filename):
                 chunk = request.stream.read(chunk_size)
                 upload.write(chunk)
                 bytes_left -= len(chunk)
-        return "wget https://jack1100up.herokuapp.com/cdn/{}\n\n{}".format(pathname2url(file_),garbage_str)
+        return "wget https://example.com/cdn/{}\n\n{}".format(pathname2url(file_),garbage_str)
 
 @app.route('/cdn/<path:codeword>')
 def download_file(codeword):
@@ -41,19 +41,19 @@ def download_file(codeword):
 def get_list():
     return "<br>".join([
     "<b><u>All uploads</u></b>",
-    *["wget <a href='https://jack1100up.herokuapp.com/cdn/{0}'>https://jack1100up.herokuapp.com/cdn/{0}</a>\n\n".format(pathname2url(file)) for file in os.listdir("cdn")]
+    *["wget <a href='example.com/cdn/{0}'>https://example.com/cdn/{0}</a>\n\n".format(pathname2url(file)) for file in os.listdir("cdn")]
     ])
 
 def docu():
     return "<br>".join([
-    "Welcome to Personal Mini Cloud.",
+    "Welcome to Upload Server.",
     "========================================================================================",
     "Usage:",
-    "curl -F file=@FILE_PATH  https://jack1100up.herokuapp.com",
+    "curl -F file=@FILE_PATH  https://example.com",
     "",
     "Replace FILE_PATH with absolute path of the file to be uploaded to the cloud."
     "","",
-    "<a href='https://jack1100up.herokuapp.com/all'>List all uploads</a>",
+    "<a href='https://example.com/all'>List all uploads</a>",
     ""
     ])
 
