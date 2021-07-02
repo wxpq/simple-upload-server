@@ -1,3 +1,3 @@
-heroku container:push web --app personal-mini-cloud
-heroku container:release web --app personal-mini-cloud
-heroku logs --app personal-mini-cloud --tail
+heroku container:push web --app unlimited-upload-server
+heroku container:release web --app unlimited-upload-server
+heroku logs --app unlimited-upload-server --tail
